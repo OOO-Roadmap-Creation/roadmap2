@@ -1,0 +1,317 @@
+basePath: /
+definitions:
+  handler.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handler.publishedNodeResponse:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      parentId:
+        type: integer
+      priority:
+        type: integer
+      title:
+        type: string
+    type: object
+  handler.publishedRoadmapResponse:
+    properties:
+      dateOfPublish:
+        type: string
+      description:
+        type: string
+      id: {}
+      title:
+        type: string
+      version:
+        type: integer
+      visible:
+        type: boolean
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: Публичные роадмапы, ноды, рейтинг
+  title: Roadmap2 API
+  version: "1.0"
+paths:
+  /published-node/roadmap/:
+    get:
+      consumes:
+      - application/json
+      description: '...'
+      operationId: nodes
+      parameters:
+      - description: Roadmap ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handler.publishedNodeResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Получение списка нод роадмапа
+      tags:
+      - published-node-controller
+  /published-roadmap:
+    get:
+      consumes:
+      - application/json
+      description: '...'
+      operationId: list-roadmap
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              items:
+                $ref: '#/definitions/handler.publishedRoadmapResponse'
+              type: array
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Получение списка роадмапов
+      tags:
+      - published-roadmap-controller
+  /published-roadmap/{id}:
+    get:
+      consumes:
+      - application/json
+      description: '...'
+      operationId: one-roadmap
+      parameters:
+      - description: Roadmap ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.publishedRoadmapResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Получение одного роадмапа
+      tags:
+      - published-roadmap-controller
+  /published-roadmap/{id}/{visibility}:
+    put:
+      consumes:
+      - application/json
+      description: '...'
+      operationId: visibility
+      parameters:
+      - description: Roadmap ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: new visible status
+        in: path
+        name: visibility
+        required: true
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.publishedRoadmapResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Изменение видимости роадмапа
+      tags:
+      - published-roadmap-controller
+  /rating/roadmap/{roadmap_id}:
+    get:
+      consumes:
+      - application/json
+      description: '...'
+      operationId: get-rating
+      parameters:
+      - description: Roadmap ID
+        in: path
+        name: roadmap_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: int
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Получение рейтинга роадмапа
+      tags:
+      - rating-controller
+    post:
+      consumes:
+      - application/json
+      description: '...'
+      operationId: set-rating
+      parameters:
+      - description: Roadmap ID
+        in: path
+        name: roadmap_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: bool
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Лайк роадмапа (установка\снятие)
+      tags:
+      - rating-controller
+  /rating/roadmap/{roadmap_id}/user:
+    get:
+      consumes:
+      - application/json
+      description: '...'
+      operationId: get-rating-user
+      parameters:
+      - description: Roadmap ID
+        in: path
+        name: roadmap_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: bool
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Получение оценки роадмапа пользователем
+      tags:
+      - rating-controller
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
